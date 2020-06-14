@@ -1,48 +1,47 @@
 const products = [
   {
     productName: "product1",
-    productQuantity: "1",
-    productPrice: "1000",
+    productQuantity: 1,
   },
   {
     productName: "product2",
-    productQuantity: "2",
-    productPrice: "2000",
-  },
-  {
-    productName: "product3",
-    productQuantity: "3",
-    productPrice: "3000",
+    productQuantity: 2,
   },
 ];
-
-function getAllProducts() {
-  console.log(products);
-}
-//add
-
-function addProduct(pName, pQuantity, pPrice) {
-  const newProduct = {
-    productName: pName,
-    productQuantity: pQuantity,
-    productPrice: pPrice,
-  };
-  products.push(newProduct);
-  getAllProducts();
-}
-//modify 
-
-function modifyProduct(selectedProductName, newModifiedQuantity) {
-  products.forEach((product) => {
-    product.productName === selectedProductName
-      ? (product.productQuantity = newModifiedQuantity)
-      : null;
-  });
-
-  getAllProducts();
+///////
+function validateProduct(name, quantity) {
+  if (typeof name !== "string") {
+    throw new Error("product name must be a string");
+  } else if (typeof quantity !== "number") {
+    throw new Error("product quantity must be a number");
+  }
 }
 
-//data
+/////////
+function getAllProducts(productsList) {
+  console.log(productsList);
+}
+getAllProducts(products);
 
-addProduct("product4", "1000", "50");
-modifyProduct("product2", 800);
+/////////
+function addProduct(productName, productQuantity) {
+  validateProduct(productName, productQuantity);
+  const newProducts = [...products];
+  newProducts.push({ productName, productQuantity });
+  getAllProducts(newProducts);
+}
+addProduct("product3", 3);
+
+/////////
+function modifyProduct(productName, productQuantity) {
+  validateProduct(productName, productQuantity);
+  const newProducts = [...products];
+  for (let i = 0; i <= newProducts.length - 1; i++) {
+    if (newProducts[i].productName === productName) {
+      newProducts[i].productQuantity = productQuantity;
+      break;
+    }
+  }
+  getAllProducts(newProducts);
+}
+modifyProduct("product1", 888);
